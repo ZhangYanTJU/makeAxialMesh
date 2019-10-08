@@ -7,5 +7,8 @@ cd ${0%/*} || exit 1    # Run from this directory
 # Set application name
 application=$(getApplication)
 
+runApplication foamDictionary -entry writeFormat -set binary system/controlDict
 runApplication blockMesh
-runApplication makeAxialMesh -axis center -wedge frontAndBackPlanes
+runApplication makeAxialMesh -overwrite
+runApplication collapseEdges -overwrite
+runApplication checkMesh
