@@ -1,25 +1,19 @@
-/*---------------------------------------------------------------------------*\
-| =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  1.0                                   |
-|   \\  /    A nd           | Web:      http://www.openfoam.org               |
-|    \\/     M anipulation  |                                                 |
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
-
 FoamFile
 {
-    version         2.0;
+    version         2;
     format          ascii;
-
-    root	    ".";
-    case 	    "test";
-    instance        "system";
-    local           "";
-
     class           dictionary;
-    object          radialBCDict;
+    location        "system";
+    object          rotationDict;
 }
-
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 // Use the same parameters as from the command line
 // makeAxialOldMode 1;
@@ -42,5 +36,6 @@ wedgeAngle 5;
 // 0 = old and default mode, points are projected on wedges
 // 1 = points are revolved
 revolve 0;
+
 
 // ************************************************************************* //
