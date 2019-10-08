@@ -2,36 +2,4 @@
 
 [![OpenFOAM version](https://img.shields.io/badge/OpenFOAM-7-brightgreen)](https://github.com/OpenFOAM/OpenFOAM-7)
 
-Description
-===========
-A utility that converts a planar (pseudo-2d) grid to an axial-symmetric mesh
-
-Original Author
-===============
-Bernhard Gschaider (bgschaid@ice-sf.at)
-
-Current Maintainer
-==================
-Bernhard Gschaider (bgschaid@ice-sf.at)
-
-Contributors
-============
-David P. Schmidt
-E David Huckaby
-Dominik Christ (Porting to 1.5)
-
-Documentation
-=============
-See: http://openfoamwiki.net/index.php/Contrib_MakeAxialMesh 
-
-The dictionary rotationDict is also used by setRadialBC
-
-Required OpenFOAM-Version (Known to work with)
-==============================================
-OpenFOAM 2.0
-A version for older OpenFOAM-version exists
-
-Directory Contents
-==================
-makeAxialMesh : the sources for the application
-TestCases     : Demo-Cases that demonstrate the functionality of the utility
+This is my personal branch based on [Bernhard Gschaider's original code](http://openfoamwiki.net/index.php/Contrib_MakeAxialMesh).
