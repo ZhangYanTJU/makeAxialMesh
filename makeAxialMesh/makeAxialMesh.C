@@ -103,12 +103,12 @@ linie getAxis(const polyPatch &axis,plane &pl) {
     default:
       point pt=pl.nearestPoint(pts[pointI]);
       if( mag(pt-pt1)>dist || mag(pt-pt2)>dist) {
-	if( mag(pt-pt1) > mag(pt-pt2)) {
-	  pt2=pt;
-	} else {
-	  pt1=pt;
-	}
-	dist=mag(pt1-pt2);
+    if( mag(pt-pt1) > mag(pt-pt2)) {
+      pt2=pt;
+    } else {
+      pt1=pt;
+    }
+    dist=mag(pt1-pt2);
       }
     }
     cnt++;
@@ -165,9 +165,9 @@ const scalar defaultAngle=5;   //DPS the plane is rotated +2.5 degrees and -2.5 
             direction of "axisLine", "axisDir".
         "radius" is the radial coordinate of the cartesian point, in the plane
             perpendicular to the rotation axis.
-	"radiusBasedPoint" is the basePoint coordinates relative to the axisPoint.
-	    It is used if revolve = true to intruduce the factorRadius in order to
-	    revolve the mesh instead of projecting it on wedges
+    "radiusBasedPoint" is the basePoint coordinates relative to the axisPoint.
+        It is used if revolve = true to intruduce the factorRadius in order to
+        revolve the mesh instead of projecting it on wedges
 
 */
 
@@ -180,7 +180,7 @@ void changeCoordinates(
     bool revolve)
 {
   if (revolve)    Info << "Revolving nodes" << endl;
-  else 		  Info << "Projecting nodes" << endl;
+  else           Info << "Projecting nodes" << endl;
   const scalar angle=wedgeAngle/2;
 
   repatchPolyTopoChanger topo(mesh);
@@ -241,7 +241,7 @@ void splitWedge(polyMesh &mesh,word wname,plane pl) {
   const polyBoundaryMesh& patches = mesh.boundaryMesh();
   const polyPatch &wedge=patches[patches.findPatchID(wname)];
 
-  const vectorField::subField 	& fcs=wedge.faceCentres ();
+  const vectorField::subField     & fcs=wedge.faceCentres ();
 
   faceSet facesPos(mesh,"set1_"+wname,fcs.size()/2,IOobject::NO_WRITE);
   faceSet facesNeg(mesh,"set2_"+wname,fcs.size()/2,IOobject::NO_WRITE);
@@ -270,13 +270,13 @@ void splitWedge(polyMesh &mesh,word wname,plane pl) {
       const polyPatch& pp = patches[patchI];
 
       newPatches[patchI] =
-	pp.clone
-	(
-	 patches,
-	 patchI,
-	 pp.size(),
-	 pp.start()
-	 ).ptr();
+    pp.clone
+    (
+     patches,
+     patchI,
+     pp.size(),
+     pp.start()
+     ).ptr();
 
     }
 
@@ -322,14 +322,14 @@ void splitWedge(polyMesh &mesh,word wname,plane pl) {
       label faceI = patchFacesPos[i];
 
       if (mesh.isInternalFace(faceI))
-	{
-	  FatalErrorIn("SplitWedge")
-	    << "Face " << faceI << " specified in set " << facesPos.name()
-	    << " is not an external face of the mesh." << endl
-	    << "This application can only repatch existing boundary"
-	    << " faces."
-	    << exit(FatalError);
-	}
+    {
+      FatalErrorIn("SplitWedge")
+        << "Face " << faceI << " specified in set " << facesPos.name()
+        << " is not an external face of the mesh." << endl
+        << "This application can only repatch existing boundary"
+        << " faces."
+        << exit(FatalError);
+    }
 
       topo.changePatchID(patchFacesPos[i], patchPos);
     }
@@ -345,14 +345,14 @@ void splitWedge(polyMesh &mesh,word wname,plane pl) {
       label faceI = patchFacesNeg[i];
 
       if (mesh.isInternalFace(faceI))
-	{
-	  FatalErrorIn("SplitWedge")
-	    << "Face " << faceI << " specified in set " << facesNeg.name()
-	    << " is not an external face of the mesh." << endl
-	    << "This application can only repatch existing boundary"
-	    << " faces."
-	    << exit(FatalError);
-	}
+    {
+      FatalErrorIn("SplitWedge")
+        << "Face " << faceI << " specified in set " << facesNeg.name()
+        << " is not an external face of the mesh." << endl
+        << "This application can only repatch existing boundary"
+        << " faces."
+        << exit(FatalError);
+    }
 
       topo.changePatchID(patchFacesNeg[i], patchNeg);
     }
@@ -462,7 +462,7 @@ int main(int argc, char *argv[])
       wedgeName=args.options()["wedge"];
 
       if(args.options().found("offset")) {
-	offset=readScalar(IStringStream(args.options()["offset"])());
+    offset=readScalar(IStringStream(args.options()["offset"])());
       }
     } else if(args.options().found("axis") || args.options().found("wedge")) {
         FatalErrorIn(args.executable())
@@ -470,34 +470,34 @@ int main(int argc, char *argv[])
             << exit(FatalError);
     } else {
         IOdictionary rotationalDict
-	  (
-	   IOobject
-	   (
-	    "rotationDict",
-	    runTime.system(),
-	    mesh,
-	    IOobject::MUST_READ,
-	    IOobject::NO_WRITE
-	    )
-	   );
+      (
+       IOobject
+       (
+        "rotationDict",
+        runTime.system(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::NO_WRITE
+        )
+       );
 
-	revolve = readBool(rotationalDict.lookup("revolve"));
+    revolve = readBool(rotationalDict.lookup("revolve"));
 
-	if(rotationalDict.found("makeAxialOldMode") &&
-	   readBool(rotationalDict.lookup("makeAxialOldMode"))) {
-	  oldMode=true;
-	  Info << "Using old mode" << endl;
+    if(rotationalDict.found("makeAxialOldMode") &&
+       readBool(rotationalDict.lookup("makeAxialOldMode"))) {
+      oldMode=true;
+      Info << "Using old mode" << endl;
 
-	  if(rotationalDict.found("makeAxialOffset")) {
-	    offset=readScalar(rotationalDict["makeAxialOffset"]);
-	  }
-	} else {
-	  rotation=rotationalDict.lookup("rotationVector");
-	  origin=rotationalDict.lookup("originVector");
-	}
+      if(rotationalDict.found("makeAxialOffset")) {
+        offset=readScalar(rotationalDict["makeAxialOffset"]);
+      }
+    } else {
+      rotation=rotationalDict.lookup("rotationVector");
+      origin=rotationalDict.lookup("originVector");
+    }
         axisName=word(rotationalDict.lookup("makeAxialAxisPatch"));
 
-	wedgeName=word(rotationalDict["makeAxialWedgePatch"]);
+    wedgeName=word(rotationalDict["makeAxialWedgePatch"]);
 
         if( axisName == wedgeName) {
             FatalErrorIn(args.executable())
@@ -506,21 +506,21 @@ int main(int argc, char *argv[])
         }
 
         if(rotationalDict.found("wedgeAngle")) {
-	    wedgeAngle=readScalar(rotationalDict["wedgeAngle"]);
+        wedgeAngle=readScalar(rotationalDict["wedgeAngle"]);
         }
     }
 
     if(args.options().found("wedgeAngle")) {
-	wedgeAngle=readScalar(IStringStream(args.options()["wedgeAngle"])());
+    wedgeAngle=readScalar(IStringStream(args.options()["wedgeAngle"])());
     }
 
     if(offset<0) {
       FatalErrorIn(args.executable())
-	<< "Offset " << offset << " smaller than 0" << endl
-	<< exit(FatalError);
+    << "Offset " << offset << " smaller than 0" << endl
+    << exit(FatalError);
     }
     if(offset>0) {
-	Info << " Adding offset " << offset << endl;
+    Info << " Adding offset " << offset << endl;
     }
 
     pointField& points = const_cast<pointField&>(mesh.points());
@@ -534,20 +534,20 @@ int main(int argc, char *argv[])
 
     if (patches.findPatchID(wedgeName) == -1)
       {
-	FatalErrorIn(args.executable())
-	  << "Patch " << wedgeName << " does not exists in mesh" << endl
-	  << "Patches are " << patches.names()
-	  << exit(FatalError);
+    FatalErrorIn(args.executable())
+      << "Patch " << wedgeName << " does not exists in mesh" << endl
+      << "Patches are " << patches.names()
+      << exit(FatalError);
       }
 
     if(oldMode) {
       if (patches.findPatchID(axisName) == -1)
-	{
-	  FatalErrorIn(args.executable())
+    {
+      FatalErrorIn(args.executable())
             << "Patch " << axisName << " does not exists in mesh" << endl
             << "Patches are " << patches.names()
             << exit(FatalError);
-	}
+    }
 
       const polyPatch &axisPatch=patches[patches.findPatchID(axisName)];
 
@@ -567,7 +567,7 @@ int main(int argc, char *argv[])
         theAxis,
         offset,
         wedgeAngle,
-	revolve
+    revolve
     );
 
     scalar distance=offset;
